@@ -1,43 +1,44 @@
-async function searchMovies(searchTitle) {
+async function searchMovies() {
+    const searchTitle = document.getElementById('searchInput').value; // Get the search input
+    const resultsDiv = document.getElementById('results'); // Div to display results
+    const moviesWrapper = document.querySelector(".results"); // Wrapper for loading state
 
-    const query = document.getElementById('searchInput').value;
+    // Show loading state
+    moviesWrapper.classList.add('movies__loading');
 
-    const resultsDiv = document.getElementById('results');
+    try {
+        const response = await fetch(`http://www.omdbapi.com/?apikey=c6a26922&s=${searchTitle}`);
+        const moviesData = await response.json();
 
-    const moviesWrapper = document.querySelector(".results");
-    const movies = await fetch(`http://www.omdbapi.com/?i=tt3896198&apikey=c6a26922&s=${searchTitle}`);
-    const moviesData = await movies.json();
+        // Check if the response contains movies
+        if (moviesData.Response === "True") {
+            // Limit to the first 6 movies
+            const limitedMovies = moviesData.Search.slice(0, 6);
 
-    booksWrapper.classList += ' movies__loading'
-
-    if (!movies) {
-    movies = await getMovies();
+            // Render the movies
+            resultsDiv.innerHTML = limitedMovies.map(movie => movieHTML(movie)).join('');
+        } else {
+            resultsDiv.innerHTML = `<p>No results found for "${searchTitle}".</p>`;
+        }
+    } catch (error) {
+        console.error('Error fetching movies:', error);
+        resultsDiv.innerHTML = `<p>Error fetching movies. Please try again later.</p>`;
+    } finally {
+        // Remove loading state
+        moviesWrapper.classList.remove('movies__loading');
     }
-  
-    moviesWrapper.classList.remove('books__loading')
-   
-    const limitedMovies = postsMovies.slice(0, 6);
-
-   
-    movieListEl.innerHTML = limitedMovies.map(movies => movieHTML(movie))
-    .join('');
 }
 
-moviesWrapper.innerHTML = booksHtml;
-
+// Function to create HTML for each movie
 function movieHTML(movie) {
     return `
-    <div class="movie">
-      <div class="movie__title">
-        ${movie.title}
-      </div>
-      <p class="movie__body">
-        ${movie.poster}
-      </p>
-    </div>
+        <div class="movie">
+            <h3>${movie.Title}</h3>
+            <p>${movie.Year}</p>
+            <img src="${movie.Poster}" alt="${movie.Title} poster">
+        </div>
     `;
-    resultsDiv.innerHTML = `You searched for: ${query}`;
 }
-
 setTimeout(() => {
-renderMovies()})
+searchMovies()
+}, 1000); 

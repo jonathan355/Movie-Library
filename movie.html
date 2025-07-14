@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Movies</title>
     <link rel="stylesheet" href="styles.css">
-    <script src="movies.js"></script>
+    <script src="movies.js" defer></script>
 </head>
 <body id="movies__body">
     <section>
@@ -21,16 +21,27 @@
                         <label class="movie__search--label">
                             Search by Movie Title
                         </label>
-                            <input type="text" id="searchInput" placeholder="Title" onchange="onSearchChange(event)">
-                            <button onclick="performSearch()">Search</button>
+                            <input type="text" id="searchInput" placeholder="Title">
+                            <button onclick="searchMovies()">Search</button>
                     </div>
             </div>
         
   </section>
   <section>
-    <div id="results">
+    <div class="results" id="results">
+        <h1>
+            <span>Search Results:</span>
+        </h1>
         <i class="fas fa-spinner books__loading--spinner"></i>
     </div>
   </section>
+
+    <script>
+        function searchMovies() {
+            const query = document.getElementById('searchInput').value;
+            const resultsDiv = document.getElementById('results');
+            resultsDiv.innerHTML = `You searched for: ${query}`;
+        }
+    </script>
 </body>
 </html>
