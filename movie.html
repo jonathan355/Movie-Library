@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Movies</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="movies.js"></script>
+</head>
+<body id="movies__body">
+    <section>
+        
+        <div class="nav__container">
+                <nav>
+                <img class="logo" src="./assets/movie_popcorn.webp" alt="">
+                </nav>
+                <h1 class="landing__title">Movie Library</h1>   
+        </div>
+            <div class="movie__search--container">
+                    <div class="movie__search">
+                        <label class="movie__search--label">
+                            Search by Movie Title
+                        </label>
+                            <input type="text" id="searchInput" placeholder="Title" onchange="onSearchChange(event)">
+                            <button onclick="performSearch()">Search</button>
+                    </div>
+            </div>
+        
+  </section>
+  <section>
+    <div id="results">
+        <i class="fas fa-spinner books__loading--spinner"></i>
+    </div>
+  </section>
+</body>
+</html>
