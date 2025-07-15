@@ -15,17 +15,19 @@ body {
   overflow-x: hidden;
 }
 
-nav {
-  height: 80px;
-  display: flex;
+h3 {
+font-size: 36px;
+font-weight: 700;
+}
+
+p {
+font-size: 20px;
+font-weight: bold;
+line-height: 1.5;
 }
 
 img {
   width: 100%;
-}
-
-p {
-  line-height: 1.5;
 }
 
 a {
@@ -53,6 +55,14 @@ button:active {
   border: none;
 }
 
+/* NAVIGATION BAR */
+
+nav {
+  height: 80px;
+  display: flex;
+}
+
+
 .nav__container {
   width: 100%;
   max-width: 1200px;
@@ -69,4 +79,58 @@ button:active {
 
 .logo img {
   height: 120px;
+}
+
+/* Search */
+
+.movie__search--container {
+  width: 100%;
+  max-width: 1200px;
+  padding: 0 24px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 40px;
+}
+
+
+/* RESULTS */
+
+.movie {
+  text-align: center;
+}
+
+.small-image {
+  margin-top: 40px;
+  width: 400px;
+  height: auto;
+}
+
+.results__loading {
+  align-items: center;
+  justify-content: center;
+  padding-top: 60px;
+}
+
+.results__loading--spinner {
+display: none !important;
+}
+
+.results__loading .results__loading--spinner {
+  display: block;
+}
+
+.fa-spinner {
+  animation: rotate 600ms infinite linear;
+}
+
+
+@keyframes rotate {
+  0% {
+    transform: rotate(0);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
 }
