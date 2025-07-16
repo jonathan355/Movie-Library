@@ -6,14 +6,36 @@ async function searchMovies() {
     const moviesWrapper = document.querySelector(".results"); 
 
     moviesWrapper.classList.add('movies__loading');
+    resultsDiv.innerHTML = "<p>Loading...</p>"
+
+    if (filter === 'TITLE_A_TO_Z') {
+        movie.sort((a,b) => a.Title.localeCompare(b.Title));
+    }
+
+    else if (filter === 'TITLE_Z_TO_A') {
+        movie.sort((a,b) => b.Title.localeCompare(a.Title));
+    }
+
+    else if (filter === 'OLDEST_TO_NEWEST') {
+        movie.sort((a,b) => a.Year - b.Year); 
+    }
+    else if (filter === 'NEWEST_TO_OLDEST') {
+        movie.sort((a,b) => b.Year - a.Year);
+    }
+
 
     try {
-        const response = await fetch(`http://www.omdbapi.com/?apikey=c6a26922&s=${searchTitle}`);
+        const response = await fetch(
+            `http://www.omdbapi.com/?apikey=c6a26922&s=${searchTitle}`
+
+        );
         const moviesData = await response.json();
 
         if (moviesData.Response === "True") {
             const limitedMovies = moviesData.Search.slice(0, 6);
-            resultsDiv.innerHTML = limitedMovies.map(movie => movieHTML(movie)).join('');
+            resultsDiv.innerHTML = limitedMovies
+            .map(movie => movieHTML(movie))
+            .join('');
         } else {
             resultsDiv.innerHTML = `<p>No results found for "${searchTitle}".</p>`;
         }
@@ -48,6 +70,11 @@ function movieHTML(movie) {
         </div>
     `;
 }
+
+function filterMovies(event) {
+searchMovies(event.target.value);
+}
+
 setTimeout(() => {
 searchMovies()
 }, 2000); 
