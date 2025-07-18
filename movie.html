@@ -1,51 +1,45 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
+    <meta charset="UTF-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Movies</title>
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="styles.css"/>
     <script src="movies.js" defer></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"/>
 </head>
 <body id="movies__body">
-    <section>
-        
+   <header class="nav">
         <div class="nav__container">
                 <nav>
-                <img class="logo" src="./assets/movie_popcorn.webp" alt="">
+                <i class="fa-solid fa-film icon-large"></i>
                 </nav>
                 <h1 class="landing__title">Movie Library</h1>   
         </div>
-        <div class="movies__header">
+    </header>
+    <div class="movies__header">
+            <div class="movie__search--container">
+                    <div class="movie__search">
+                        <label class="movie__search--label">
+                            Search by Movie Title:
+                        </label>
+                        <input class="search" type="text" id="searchInput" placeholder="Title" />
+                        <button class="search__button" onclick="searchMovies()">Search</button>
+                    </div>
+            </div>
             <select id="filter" onchange="filterMovies(event)">
                 <option value="" disabled selected>Sort</option>
                 <option value="TITLE_A_TO_Z">Title, A-Z</option>
                 <option value="TITLE_Z_TO_A">Title, Z-A</option>
                 <option value="OLDEST_TO_NEWEST">Oldest to Newest</option>
                 <option value="NEWEST_TO_OLDEST">Newest to Oldest</option>
-                
-
             </select>
-        </div>
-            <div class="movie__search--container">
-                    <div class="movie__search">
-                        <label class="movie__search--label">
-                            Search by Movie Title
-                        </label>
-                            <input type="text" id="searchInput" placeholder="Title">
-                            <button onclick="searchMovies()">Search</button>
-                    </div>
-            </div>
-        
-  </section>
+    </div>    
+
+    
+  
   <section>
-    <div class="results" id="results">
-        <h1>
-            <span>Search Results:</span>
-        </h1>
-        <i class="fas fa-spinner results__loading--spinner"></i>
-    </div>
+  <div id="results"></div>
   </section>
 
     <script>
@@ -55,6 +49,7 @@
             resultsDiv.innerHTML = `You searched for: ${query}`;
         }
     </script>
+
 
 </body>
 </html>

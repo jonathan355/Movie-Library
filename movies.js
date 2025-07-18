@@ -1,39 +1,41 @@
-async function searchMovies() {
+let currentFilter ='';
+
+async function searchMovies(filter) {
     const searchTitle = document.getElementById('searchInput').value; 
-    document.body.classList += ' results__loading'
+   
     const resultsDiv = document.getElementById('results'); 
-    document.body.classList.remove ('results__loading')
-    const moviesWrapper = document.querySelector(".results"); 
+    
+    const moviesWrapper = document.getElementById("results"); 
 
     moviesWrapper.classList.add('movies__loading');
-    resultsDiv.innerHTML = "<p>Loading...</p>"
+    resultsDiv.innerHTML = '<i class="fas fa-spinner results__loading--spinner"></i>'
 
-    if (filter === 'TITLE_A_TO_Z') {
-        movie.sort((a,b) => a.Title.localeCompare(b.Title));
-    }
-
-    else if (filter === 'TITLE_Z_TO_A') {
-        movie.sort((a,b) => b.Title.localeCompare(a.Title));
-    }
-
-    else if (filter === 'OLDEST_TO_NEWEST') {
-        movie.sort((a,b) => a.Year - b.Year); 
-    }
-    else if (filter === 'NEWEST_TO_OLDEST') {
-        movie.sort((a,b) => b.Year - a.Year);
-    }
-
+   
 
     try {
         const response = await fetch(
-            `http://www.omdbapi.com/?apikey=c6a26922&s=${searchTitle}`
-
-        );
+            `http://www.omdbapi.com/?apikey=c6a26922&s=${searchTitle}`);
         const moviesData = await response.json();
 
         if (moviesData.Response === "True") {
-            const limitedMovies = moviesData.Search.slice(0, 6);
-            resultsDiv.innerHTML = limitedMovies
+            const movies = moviesData.Search.slice(0, 6);
+
+            if (filter === 'TITLE_A_TO_Z') {
+                    movies.sort((a, b) => a.Title.localeCompare(b.Title));
+            }
+
+                else if (filter === 'TITLE_Z_TO_A') {
+                    movies.sort((a, b) => b.Title.localeCompare(a.Title));
+            }
+
+                else if (filter === 'OLDEST_TO_NEWEST') {
+                    movies.sort((a, b) => parseInt(a.Year) - parseInt(b.Year)); 
+            }
+                else if (filter === 'NEWEST_TO_OLDEST') {
+                    movies.sort((a, b) => parseInt(b.Year) - parseInt(a.Year));
+            }
+
+            resultsDiv.innerHTML = movies
             .map(movie => movieHTML(movie))
             .join('');
         } else {
@@ -47,19 +49,26 @@ async function searchMovies() {
     }
 }
 
-document.addEventListener('DOMContentLoaded',() => {
+ 
+
+
+document.addEventListener('DOMContentLoaded', () => {
     const searchInput = document.getElementById('searchInput');
+    const filterSelect = document.getElementById('filter');
 
-    searchInput.addEventListener('keydown',function(event) {
-        if(event.key ==='Enter') {
-            searchMovies();
+    searchInput.addEventListener('keydown', function(event) {
+        if (event.key ==='Enter') {
+            searchMovies(currentFilter);
         }
-    }
+    });
 
-    )
-}
+filterSelect.addEventListener('change', (event) => {
+    currentFilter = event.target.value;
+    searchMovies(currentFilter)
 
-)
+});
+
+});
 
 function movieHTML(movie) {
     return `
@@ -72,9 +81,6 @@ function movieHTML(movie) {
 }
 
 function filterMovies(event) {
-searchMovies(event.target.value);
+    currentFilter = event.target.value; // Update the global currentFilter
+    searchMovies(currentFilter);        // Call searchMovies with the new filter
 }
-
-setTimeout(() => {
-searchMovies()
-}, 2000); 
