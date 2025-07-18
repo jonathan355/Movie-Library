@@ -150,6 +150,11 @@ margin-right: 4px;
 
 /* RESULTS */
 
+#results {
+display: grid;
+grid-template-columns: repeat(3,1fr);
+}
+
 .movie {
   text-align: center;
 }
