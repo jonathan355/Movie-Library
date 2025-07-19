@@ -28,12 +28,12 @@ h1 {
 }
 
 h3 {
-font-size: 36px;
+font-size: 32px;
 font-weight: 700;
 }
 
 p {
-font-size: 20px;
+font-size: 16px;
 font-weight: bold;
 line-height: 1.5;
 }
@@ -161,7 +161,7 @@ grid-template-columns: repeat(3,1fr);
 
 .small-image {
   margin-top: 40px;
-  width: 400px;
+  width: 300px;
   height: auto;
 }
 
@@ -192,4 +192,42 @@ display: none !important;
   100% {
     transform: rotate(360deg);
   }
+}
+
+/* MOBILE DEVICES */
+
+@media (max-width:639px) {
+
+ #results {
+    grid-template-columns: 1fr;
+  }
+
+  h3 {
+font-size: 20px;
+}
+
+p {
+font-size: 12px;
+}
+
+}
+
+/* TABLETS */
+
+@media (min-width:640px) and (max-width: 950px) {
+
+ #results {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+}
+
+/* DESKTOPS */
+
+@media (min-width:951px) {
+
+ #results {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
 }

@@ -84,3 +84,4 @@ function filterMovies(event) {
     currentFilter = event.target.value; // Update the global currentFilter
     searchMovies(currentFilter);        // Call searchMovies with the new filter
 }
+
